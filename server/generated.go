@@ -4,6 +4,7 @@ package main
 
 import (
 	"context"
+	"time"
 
 	"github.com/Khan/genqlient/graphql"
 )
@@ -44,8 +45,11 @@ func (v *listPagesPagesPageQuery) GetList() []listPagesPagesPageQueryListPageLis
 
 // listPagesPagesPageQueryListPageListItem includes the requested fields of the GraphQL type PageListItem.
 type listPagesPagesPageQueryListPageListItem struct {
-	Id    int    `json:"id"`
-	Title string `json:"title"`
+	Id        int       `json:"id"`
+	Title     string    `json:"title"`
+	Path      string    `json:"path"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 // GetId returns listPagesPagesPageQueryListPageListItem.Id, and is useful for accessing the field via an interface.
@@ -53,6 +57,15 @@ func (v *listPagesPagesPageQueryListPageListItem) GetId() int { return v.Id }
 
 // GetTitle returns listPagesPagesPageQueryListPageListItem.Title, and is useful for accessing the field via an interface.
 func (v *listPagesPagesPageQueryListPageListItem) GetTitle() string { return v.Title }
+
+// GetPath returns listPagesPagesPageQueryListPageListItem.Path, and is useful for accessing the field via an interface.
+func (v *listPagesPagesPageQueryListPageListItem) GetPath() string { return v.Path }
+
+// GetCreatedAt returns listPagesPagesPageQueryListPageListItem.CreatedAt, and is useful for accessing the field via an interface.
+func (v *listPagesPagesPageQueryListPageListItem) GetCreatedAt() time.Time { return v.CreatedAt }
+
+// GetUpdatedAt returns listPagesPagesPageQueryListPageListItem.UpdatedAt, and is useful for accessing the field via an interface.
+func (v *listPagesPagesPageQueryListPageListItem) GetUpdatedAt() time.Time { return v.UpdatedAt }
 
 // listPagesResponse is returned by listPages on success.
 type listPagesResponse struct {
@@ -155,6 +168,9 @@ query listPages ($orderBy: PageOrderBy) {
 		list(orderBy: $orderBy) {
 			id
 			title
+			path
+			createdAt
+			updatedAt
 		}
 	}
 }

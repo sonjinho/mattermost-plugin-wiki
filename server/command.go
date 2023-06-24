@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"regexp"
 	"strings"
@@ -71,8 +70,12 @@ func (p *Plugin) runListCommand(args []string, extra *model.CommandArgs) (bool, 
 		fmt.Print("error")
 	}
 
-	b, _ := json.Marshal(resp.GetPages().List)
-	p.postCommandResponse(extra, string(b))
+	table := "| ID | Title | Path | CreatedAt | UpdatedAt |\n|----|-------|-------|-------|-------|\n"
+	for _, item := range resp.GetPages().List {
+		table += fmt.Sprintf("| %d | %s | %s | %s | %s |\n", item.GetId(), item.GetTitle(), item.Path, item.CreatedAt, item.UpdatedAt)
+	}
+
+	p.postCommandResponse(extra, table)
 
 	return false, nil
 }

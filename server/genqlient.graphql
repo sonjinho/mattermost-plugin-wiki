@@ -1,8 +1,11 @@
 query listPages ($orderBy: PageOrderBy) {  
     pages {    
         list (orderBy: $orderBy){      
-            id      
-            title    
+            id
+            title
+            path
+            createdAt
+            updatedAt   
         }  
     }
 }
