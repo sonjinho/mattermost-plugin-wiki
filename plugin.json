@@ -1,10 +1,10 @@
 {
-    "id": "com.mattermost.plugin-starter-template",
-    "name": "Plugin Starter Template",
-    "description": "This plugin serves as a starting point for writing a Mattermost plugin.",
-    "homepage_url": "https://github.com/mattermost/mattermost-plugin-starter-template",
-    "support_url": "https://github.com/mattermost/mattermost-plugin-starter-template/issues",
-    "release_notes_url": "https://github.com/mattermost/mattermost-plugin-starter-template/releases/tag/v0.1.0",
+    "id": "wiki.js.mattermost.plugin",
+    "name": "Wiki.js mattermost plugin",
+    "description": "This plugin connect to wiki.js.",
+    "homepage_url": "https://github.com/sonjinho/mattermost-plugin-wiki",
+    "support_url": "https://github.com/sonjinho/mattermost-plugin-wiki/issues",
+    "release_notes_url": "https://github.com/sonjinho/mattermost-plugin-wiki/releases/tag/v0.1.0",
     "icon_path": "assets/starter-template-icon.svg",
     "version": "0.1.0",
     "min_server_version": "6.2.1",
@@ -23,6 +23,21 @@
     "settings_schema": {
         "header": "",
         "footer": "",
-        "settings": []
+        "settings": [
+            {
+                "key": "AccessToken",
+                "display_name": "AccessToken",
+                "type": "longtext",
+                "help_text": "wiki.js api token",
+                "default": ""
+            }, 
+            {
+                "key": "AccessURL",
+                "display_name": "Wiki.js host",
+                "type": "text",
+                "help_text": "Wiki.js URL",
+                "default": "http://localhost:3000"
+            }
+        ]
     }
 }

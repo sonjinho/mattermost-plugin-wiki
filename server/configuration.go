@@ -18,6 +18,8 @@ import (
 // If you add non-reference types to your configuration struct, be sure to rewrite Clone as a deep
 // copy appropriate for your types.
 type configuration struct {
+	AccessToken string `json:accessToken`
+	AccessURL   string `json:url`
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if
@@ -25,6 +27,10 @@ type configuration struct {
 func (c *configuration) Clone() *configuration {
 	var clone = *c
 	return &clone
+}
+
+func (c *configuration) IsValid() error {
+	return nil
 }
 
 // getConfiguration retrieves the active configuration under lock, making it safe to use

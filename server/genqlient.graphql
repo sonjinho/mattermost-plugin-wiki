@@ -1,0 +1,33 @@
+query listPages ($orderBy: PageOrderBy) {  
+    pages {    
+        list (orderBy: $orderBy){      
+            id      
+            title    
+        }  
+    }
+}
+
+query singlePage($id: Int!) {
+    pages {
+        single (id: $id) {
+            id
+            title
+            contentType
+            tags  {
+                id
+                tag
+            }
+            content
+        }
+    }
+}
+
+query listUsers {
+    users {
+        list {
+            id
+            name
+            email
+        }
+    }
+}
