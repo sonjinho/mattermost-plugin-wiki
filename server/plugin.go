@@ -46,7 +46,7 @@ func (p *Plugin) OnActivate() error {
 		Username:    "wiki.js",
 		DisplayName: "wiki js",
 		Description: "Created by the GitHub plugin.",
-	}, pluginapi.ProfileImagePath(filepath.Join("assets", "profile.png")))
+	}, pluginapi.ProfileImagePath(filepath.Join("assets", "wikijs-butterfly.png")))
 
 	if err != nil {
 		return errors.Wrap(err, "failed to ensure todo bot")

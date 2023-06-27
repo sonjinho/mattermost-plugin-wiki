@@ -55,14 +55,11 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 
 func (p *Plugin) runListCommand(args []string, extra *model.CommandArgs) (bool, error) {
 
-	// src := oauth2.StaticTokenSource(
-	// 	&oauth2.Token{AccessToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOjIsImdycCI6MSwiaWF0IjoxNjg3NDM1NjQ4LCJleHAiOjE3MTg5OTMyNDgsImF1ZCI6InVybjp3aWtpLmpzIiwiaXNzIjoidXJuOndpa2kuanMifQ.IMwo1AvpZbUnyCEGlTCK9YrRyb7t4dLbzU0MKhToUYgdoXEh7QAP8KsD-D03FMt9n9msqiGCVuZTVMmrfp5XMqlfsAyLWXzECdwzsskyeS9PiBJis4UG4_zIvsDQlZwW5D6sd2mT-ceoY8nZa2KP5fLzXXf191cxuMN2vfqLbTOBZrXmxrUh4H8qoRdKN45YPXU8zHoQpioOas79zl4wsDqX2Us4XZKBsJxYCyiwlO96_TS3l2rx8sHa5TFSCAFfA27lsDGHOc8nOlJ-CUMXhGyqT8nFnMdtrVQwQUmeIt0nfnr8XOUbCR4RKbNeRDUMrty3lYT6X-Qq3wmhTN37Jg"},
-	// )
-	// httpClient := oauth2.NewClient(context.Background(), src)
+	graphqlClient, err := p.GetOAuth2Client()
 
-	// client := graphql.NewClient("http://localhost:3000/graphql", httpClient)
-
-	graphqlClient, _ := p.GetOAuth2Client()
+	if err != nil {
+		p.postCommandResponse(extra, "Something wrong in Api Key or Host")
+	}
 
 	resp, err := listPages(context.Background(), graphqlClient, PageOrderByCreated)
 

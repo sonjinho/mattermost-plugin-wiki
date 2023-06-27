@@ -1,11 +1,6 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"],
-      "mattermost-redux/*": ["../node_modules/@mattermost/webapp/packages/mattermost-redux/src/*"],
-    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -24,11 +19,20 @@
     "isolatedModules": true,
     "noEmit": true,
     "experimentalDecorators": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./src",
+    "types": [
+      "jest",
+      "node"
+    ],
+    "paths": {
+      "@mui/styled-engine": [
+        "./node_modules/@mui/styled-engine-sc"
+      ]
+    }
   },
   "include": [
-    "src",
-    "tests"
+    "src"
   ],
   "exclude": [
     "dist",
