@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
 	"net/http"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/Khan/genqlient/graphql"
@@ -77,21 +78,36 @@ func (p *Plugin) GetOAuth2Client() (graphql.Client, error) {
 
 // ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
 func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
-	src := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOjIsImdycCI6MSwiaWF0IjoxNjg3NDM1NjQ4LCJleHAiOjE3MTg5OTMyNDgsImF1ZCI6InVybjp3aWtpLmpzIiwiaXNzIjoidXJuOndpa2kuanMifQ.IMwo1AvpZbUnyCEGlTCK9YrRyb7t4dLbzU0MKhToUYgdoXEh7QAP8KsD-D03FMt9n9msqiGCVuZTVMmrfp5XMqlfsAyLWXzECdwzsskyeS9PiBJis4UG4_zIvsDQlZwW5D6sd2mT-ceoY8nZa2KP5fLzXXf191cxuMN2vfqLbTOBZrXmxrUh4H8qoRdKN45YPXU8zHoQpioOas79zl4wsDqX2Us4XZKBsJxYCyiwlO96_TS3l2rx8sHa5TFSCAFfA27lsDGHOc8nOlJ-CUMXhGyqT8nFnMdtrVQwQUmeIt0nfnr8XOUbCR4RKbNeRDUMrty3lYT6X-Qq3wmhTN37Jg"},
-	)
-	httpClient := oauth2.NewClient(context.Background(), src)
+	userID := r.Header.Get("Mattermost-User-ID")
+	if userID == "" {
+		http.Error(w, "Not authorized", http.StatusUnauthorized)
+		return
+	}
+	switch r.URL.Path {
+	case "/list":
+		src := oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: p.configuration.AccessToken},
+		)
+		httpClient := oauth2.NewClient(context.Background(), src)
 
-	client := graphql.NewClient("http://localhost:3000/graphql", httpClient)
+		client := graphql.NewClient(p.configuration.AccessURL, httpClient)
 
-	resp, err := listPages(context.Background(), client, PageOrderByCreated)
-	if err != nil {
-		fmt.Println("error")
+		resp, err := listPages(context.Background(), client)
+		if err != nil {
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(resp)
+		return
+	default:
+		path := r.URL.Path
+		http.Redirect(w, r, strings.TrimSuffix(p.configuration.AccessURL, "graphql")+path, http.StatusSeeOther)
+		return
 	}
 
-	// fmt.Println()
-
-	fmt.Fprint(w, resp.GetPages().List)
 }
 
 // See https://developers.mattermost.com/extend/plugins/server/reference/

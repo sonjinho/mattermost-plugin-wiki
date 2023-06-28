@@ -9,24 +9,6 @@ import (
 	"github.com/Khan/genqlient/graphql"
 )
 
-type PageOrderBy string
-
-const (
-	PageOrderByCreated PageOrderBy = "CREATED"
-	PageOrderById      PageOrderBy = "ID"
-	PageOrderByPath    PageOrderBy = "PATH"
-	PageOrderByTitle   PageOrderBy = "TITLE"
-	PageOrderByUpdated PageOrderBy = "UPDATED"
-)
-
-// __listPagesInput is used internally by genqlient
-type __listPagesInput struct {
-	OrderBy PageOrderBy `json:"orderBy"`
-}
-
-// GetOrderBy returns __listPagesInput.OrderBy, and is useful for accessing the field via an interface.
-func (v *__listPagesInput) GetOrderBy() PageOrderBy { return v.OrderBy }
-
 // __singlePageInput is used internally by genqlient
 type __singlePageInput struct {
 	Id int `json:"id"`
@@ -48,6 +30,7 @@ type listPagesPagesPageQueryListPageListItem struct {
 	Id        int       `json:"id"`
 	Title     string    `json:"title"`
 	Path      string    `json:"path"`
+	Locale    string    `json:"locale"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 }
@@ -60,6 +43,9 @@ func (v *listPagesPagesPageQueryListPageListItem) GetTitle() string { return v.T
 
 // GetPath returns listPagesPagesPageQueryListPageListItem.Path, and is useful for accessing the field via an interface.
 func (v *listPagesPagesPageQueryListPageListItem) GetPath() string { return v.Path }
+
+// GetLocale returns listPagesPagesPageQueryListPageListItem.Locale, and is useful for accessing the field via an interface.
+func (v *listPagesPagesPageQueryListPageListItem) GetLocale() string { return v.Locale }
 
 // GetCreatedAt returns listPagesPagesPageQueryListPageListItem.CreatedAt, and is useful for accessing the field via an interface.
 func (v *listPagesPagesPageQueryListPageListItem) GetCreatedAt() time.Time { return v.CreatedAt }
@@ -163,12 +149,13 @@ func (v *singlePageResponse) GetPages() singlePagePagesPageQuery { return v.Page
 
 // The query or mutation executed by listPages.
 const listPages_Operation = `
-query listPages ($orderBy: PageOrderBy) {
+query listPages {
 	pages {
-		list(orderBy: $orderBy) {
+		list {
 			id
 			title
 			path
+			locale
 			createdAt
 			updatedAt
 		}
@@ -179,14 +166,10 @@ query listPages ($orderBy: PageOrderBy) {
 func listPages(
 	ctx context.Context,
 	client graphql.Client,
-	orderBy PageOrderBy,
 ) (*listPagesResponse, error) {
 	req := &graphql.Request{
 		OpName: "listPages",
 		Query:  listPages_Operation,
-		Variables: &__listPagesInput{
-			OrderBy: orderBy,
-		},
 	}
 	var err error
 

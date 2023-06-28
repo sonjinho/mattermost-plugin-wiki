@@ -61,7 +61,7 @@ func (p *Plugin) runListCommand(args []string, extra *model.CommandArgs) (bool, 
 		p.postCommandResponse(extra, "Something wrong in Api Key or Host")
 	}
 
-	resp, err := listPages(context.Background(), graphqlClient, PageOrderByCreated)
+	resp, err := listPages(context.Background(), graphqlClient)
 
 	if err != nil {
 		fmt.Print("error")

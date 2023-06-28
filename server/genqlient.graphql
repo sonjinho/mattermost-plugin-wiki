@@ -1,9 +1,10 @@
-query listPages ($orderBy: PageOrderBy) {  
+query listPages  {  
     pages {    
-        list (orderBy: $orderBy){      
+        list {      
             id
             title
             path
+            locale
             createdAt
             updatedAt   
         }  

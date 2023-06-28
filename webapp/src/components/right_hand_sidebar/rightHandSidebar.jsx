@@ -1,23 +1,19 @@
-import * as React from 'react';
-import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TreeItem, {
-    TreeItemProps,
-    useTreeItem,
-    TreeItemContentProps,
+    useTreeItem
 } from '@mui/lab/TreeItem';
-import clsx from 'clsx';
+import TreeView from '@mui/lab/TreeView';
+import { Button, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import FullScreenModal from 'components/modals/modals';
-import { useState } from 'react';
-
+import clsx from 'clsx';
+import * as React from 'react';
 const CustomContent = React.forwardRef(function CustomContent(
-    props: TreeItemContentProps,
+    props,
     ref,
 ) {
 
-    const [assigneeModal, setAssigneeModal] = useState(false);
+    const [assigneeModal, setAssigneeModal] = React.useState(false);
     const {
         classes,
         className,
@@ -40,23 +36,19 @@ const CustomContent = React.forwardRef(function CustomContent(
 
     const icon = iconProp || expansionIcon || displayIcon;
 
-    const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleMouseDown = (event) => {
         preventSelection(event);
     };
 
-    const handleExpansionClick = (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    ) => {
+    const handleExpansionClick = (event) => {
         handleExpansion(event);
     };
 
-    const handleSelectionClick = (
-        event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    ) => {
+    const handleSelectionClick = (event) => {
         handleSelection(event);
     };
 
-    const toggleAssigneeModal = (value: boolean) => {
+    const toggleAssigneeModal = (value) => {
         setAssigneeModal(value);
     }
 
@@ -70,7 +62,7 @@ const CustomContent = React.forwardRef(function CustomContent(
                 [classes.disabled]: disabled,
             })}
             onMouseDown={handleMouseDown}
-            ref={ref as React.Ref<HTMLDivElement>}
+            ref={ref}
         >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
             <div onClick={handleExpansionClick} className={classes.iconContainer}>
@@ -83,43 +75,77 @@ const CustomContent = React.forwardRef(function CustomContent(
                 style={{ fontSize: '2rem' }}
             >
 
-                <a onClick={() => alert({ label })}>{label}</a>
+                <a href={nodeId} target="_blank" style={{ textAlign: 'left' }}  >{label}</a>
 
             </Typography>
         </div>
     );
 });
 
-function CustomTreeItem(props: TreeItemProps) {
+
+function CustomTreeItem(props) {
     return <TreeItem ContentComponent={CustomContent} {...props} />;
 }
 
-export default function IconExpansionTreeView() {
+export const RightHandSideBar = (props) => {
+    let menuData = props.listData;
+    let url = props.data;
+    menuData = menuData.sort(function (a, b) {
+        if (a.locale != b.locale) {
+            return a.locale.localeCompare(b.locale);
+        }
 
+        return a.path.localeCompare(b.path);
+
+    })
+
+    const folderStruct = new Map();
+    console.log(menuData);
+    menuData.forEach((item) => {
+        if (!folderStruct.has(item.locale)) {
+            folderStruct.set(item.locale, []);
+            folderStruct.get(item.locale).push(item.path);
+        } else {
+            folderStruct.get(item.locale).push(item.path);
+        }
+    });
+
+    console.log(folderStruct);
+    const innerComponent = menuData.map((item) => {
+        return (<CustomTreeItem nodeId={url + "/" + item.locale + "/" + item.path} label={item.title} />)
+    });
+
+    console.log(innerComponent)
+
+    let prev;
+
+    for (let index = 0; index < menuData.length; index++) {
+        const element = menuData[index];
+
+    }
     return (
         <TreeView
-            aria-label="icon expansion"
+            aria-label='icon expansion'
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
         >
+
+
+
+            <CustomTreeItem nodeId={"0" + "_1"} label={"item.path"} >
+                {
+                    innerComponent
+                }
+            </CustomTreeItem>
+            {/* 
             <CustomTreeItem nodeId="1" label="Applications">
-                <CustomTreeItem nodeId="2" label="Calendar" />
-                <CustomTreeItem nodeId="3" label="Chrome" />
-                <CustomTreeItem nodeId="4" label="Webstorm" />
+
+                
             </CustomTreeItem>
-            <CustomTreeItem nodeId="5" label="Documents">
-                <CustomTreeItem nodeId="10" label="OSS" />
-                <CustomTreeItem nodeId="6" label="MUI">
-                    <CustomTreeItem nodeId="7" label="src">
-                        <CustomTreeItem nodeId="8" label="index.js" />
-                        <CustomTreeItem nodeId="9" label="tree-view.js" />
-                    </CustomTreeItem>
-                </CustomTreeItem>
-            </CustomTreeItem>
+            <CustomTreeItem nodeId="2" label="Calendar" /> */}
         </TreeView>
-    );
-}
-function setState(arg0: { assigneeModal: boolean; }) {
-    throw new Error('Function not implemented.');
+    )
 }
 
+
+export default RightHandSideBar

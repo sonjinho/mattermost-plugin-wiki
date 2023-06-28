@@ -11,7 +11,7 @@ if (NPM_TARGET === 'run') {
 
 const config = {
     entry: [
-        './src/index.ts',
+        './src/index.js',
     ],
     resolve: {
         modules: [
