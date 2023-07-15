@@ -8,7 +8,36 @@ export function setRhsVisible(payload) {
         payload,
     }
 }
+export const callBoards = () => async (dispatch, getState) => {
+    let resp;
+    let data;
+    try {
+        resp = await fetch("http://mattermost.gclswhub.com/plugins/focalboard/api/v2/boards/b59dcgjxtx7dwme1o5udhfok4rc/blocks?all=true", Client4.getOptions({
+            method: 'get',
+        }))
+        data = await resp.json();
 
+        console.log(data.filter(item => item.parentId === item.boardId && item.title != "").map((item) => {
+            return {
+                id: item.id,
+                title: item.title,
+                createAt: new Date(item.createAt),
+                updateAt: new Date(item.updateAt),
+            }
+        }));
+    } catch (error) {
+        console.log(error);
+        return { error };
+    }
+    let actionType = ActionTypes.GET_LIST_DATA_;
+
+    dispatch({
+        type: actionType,
+        payload: data,
+    });
+
+    return { data };
+}
 export const callList = () => async (dispatch, getState) => {
     let resp;
     let data;
@@ -18,7 +47,6 @@ export const callList = () => async (dispatch, getState) => {
             credentials: 'include'
         }));
         data = await resp.json();
-        data = data.pages;
     } catch (error) {
         return { error };
     }

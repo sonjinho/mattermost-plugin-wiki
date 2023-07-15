@@ -56,6 +56,6 @@ export const getPluginServerRoute = (state) => {
     return siteURL + '/plugins/' + pluginId;
 };
 
-export const getList = (state) => getPluginState(state).list.list;
+export const getList = (state) => getPluginState(state).list;
 export const isRhsVisible = (state) => getPluginState(state).isRhsVisible;
 export const isTeamSidebarVisible = (state) => !getPluginState(state).isTeamSidebarHidden;

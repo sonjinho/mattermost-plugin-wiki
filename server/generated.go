@@ -9,6 +9,74 @@ import (
 	"github.com/Khan/genqlient/graphql"
 )
 
+// __createPageInput is used internally by genqlient
+type __createPageInput struct {
+	Content     string   `json:"content"`
+	Description string   `json:"description"`
+	Editor      string   `json:"editor"`
+	IsPublished bool     `json:"isPublished"`
+	IsPrivate   bool     `json:"isPrivate"`
+	Locale      string   `json:"locale"`
+	Path        string   `json:"path"`
+	Tags        []string `json:"tags"`
+	Title       string   `json:"title"`
+}
+
+// GetContent returns __createPageInput.Content, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetContent() string { return v.Content }
+
+// GetDescription returns __createPageInput.Description, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetDescription() string { return v.Description }
+
+// GetEditor returns __createPageInput.Editor, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetEditor() string { return v.Editor }
+
+// GetIsPublished returns __createPageInput.IsPublished, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetIsPublished() bool { return v.IsPublished }
+
+// GetIsPrivate returns __createPageInput.IsPrivate, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetIsPrivate() bool { return v.IsPrivate }
+
+// GetLocale returns __createPageInput.Locale, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetLocale() string { return v.Locale }
+
+// GetPath returns __createPageInput.Path, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetPath() string { return v.Path }
+
+// GetTags returns __createPageInput.Tags, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetTags() []string { return v.Tags }
+
+// GetTitle returns __createPageInput.Title, and is useful for accessing the field via an interface.
+func (v *__createPageInput) GetTitle() string { return v.Title }
+
+// __createUserInput is used internally by genqlient
+type __createUserInput struct {
+	Email              string `json:"email"`
+	Name               string `json:"name"`
+	ProviderKey        string `json:"providerKey"`
+	Groups             []int  `json:"groups"`
+	MustChangePassword bool   `json:"mustChangePassword"`
+	SendWelcomeEmail   bool   `json:"sendWelcomeEmail"`
+}
+
+// GetEmail returns __createUserInput.Email, and is useful for accessing the field via an interface.
+func (v *__createUserInput) GetEmail() string { return v.Email }
+
+// GetName returns __createUserInput.Name, and is useful for accessing the field via an interface.
+func (v *__createUserInput) GetName() string { return v.Name }
+
+// GetProviderKey returns __createUserInput.ProviderKey, and is useful for accessing the field via an interface.
+func (v *__createUserInput) GetProviderKey() string { return v.ProviderKey }
+
+// GetGroups returns __createUserInput.Groups, and is useful for accessing the field via an interface.
+func (v *__createUserInput) GetGroups() []int { return v.Groups }
+
+// GetMustChangePassword returns __createUserInput.MustChangePassword, and is useful for accessing the field via an interface.
+func (v *__createUserInput) GetMustChangePassword() bool { return v.MustChangePassword }
+
+// GetSendWelcomeEmail returns __createUserInput.SendWelcomeEmail, and is useful for accessing the field via an interface.
+func (v *__createUserInput) GetSendWelcomeEmail() bool { return v.SendWelcomeEmail }
+
 // __singlePageInput is used internally by genqlient
 type __singlePageInput struct {
 	Id int `json:"id"`
@@ -16,6 +84,158 @@ type __singlePageInput struct {
 
 // GetId returns __singlePageInput.Id, and is useful for accessing the field via an interface.
 func (v *__singlePageInput) GetId() int { return v.Id }
+
+// createPagePagesPageMutation includes the requested fields of the GraphQL type PageMutation.
+type createPagePagesPageMutation struct {
+	Create createPagePagesPageMutationCreatePageResponse `json:"create"`
+}
+
+// GetCreate returns createPagePagesPageMutation.Create, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutation) GetCreate() createPagePagesPageMutationCreatePageResponse {
+	return v.Create
+}
+
+// createPagePagesPageMutationCreatePageResponse includes the requested fields of the GraphQL type PageResponse.
+type createPagePagesPageMutationCreatePageResponse struct {
+	ResponseResult createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus `json:"responseResult"`
+	Page           createPagePagesPageMutationCreatePageResponsePage                         `json:"page"`
+}
+
+// GetResponseResult returns createPagePagesPageMutationCreatePageResponse.ResponseResult, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponse) GetResponseResult() createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus {
+	return v.ResponseResult
+}
+
+// GetPage returns createPagePagesPageMutationCreatePageResponse.Page, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponse) GetPage() createPagePagesPageMutationCreatePageResponsePage {
+	return v.Page
+}
+
+// createPagePagesPageMutationCreatePageResponsePage includes the requested fields of the GraphQL type Page.
+type createPagePagesPageMutationCreatePageResponsePage struct {
+	Id    int    `json:"id"`
+	Path  string `json:"path"`
+	Title string `json:"title"`
+}
+
+// GetId returns createPagePagesPageMutationCreatePageResponsePage.Id, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponsePage) GetId() int { return v.Id }
+
+// GetPath returns createPagePagesPageMutationCreatePageResponsePage.Path, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponsePage) GetPath() string { return v.Path }
+
+// GetTitle returns createPagePagesPageMutationCreatePageResponsePage.Title, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponsePage) GetTitle() string { return v.Title }
+
+// createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus includes the requested fields of the GraphQL type ResponseStatus.
+type createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus struct {
+	Succeeded bool   `json:"succeeded"`
+	ErrorCode int    `json:"errorCode"`
+	Slug      string `json:"slug"`
+	Message   string `json:"message"`
+}
+
+// GetSucceeded returns createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus.Succeeded, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus) GetSucceeded() bool {
+	return v.Succeeded
+}
+
+// GetErrorCode returns createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus.ErrorCode, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus) GetErrorCode() int {
+	return v.ErrorCode
+}
+
+// GetSlug returns createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus.Slug, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus) GetSlug() string {
+	return v.Slug
+}
+
+// GetMessage returns createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus.Message, and is useful for accessing the field via an interface.
+func (v *createPagePagesPageMutationCreatePageResponseResponseResultResponseStatus) GetMessage() string {
+	return v.Message
+}
+
+// createPageResponse is returned by createPage on success.
+type createPageResponse struct {
+	Pages createPagePagesPageMutation `json:"pages"`
+}
+
+// GetPages returns createPageResponse.Pages, and is useful for accessing the field via an interface.
+func (v *createPageResponse) GetPages() createPagePagesPageMutation { return v.Pages }
+
+// createUserResponse is returned by createUser on success.
+type createUserResponse struct {
+	Users createUserUsersUserMutation `json:"users"`
+}
+
+// GetUsers returns createUserResponse.Users, and is useful for accessing the field via an interface.
+func (v *createUserResponse) GetUsers() createUserUsersUserMutation { return v.Users }
+
+// createUserUsersUserMutation includes the requested fields of the GraphQL type UserMutation.
+type createUserUsersUserMutation struct {
+	Create createUserUsersUserMutationCreateUserResponse `json:"create"`
+}
+
+// GetCreate returns createUserUsersUserMutation.Create, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutation) GetCreate() createUserUsersUserMutationCreateUserResponse {
+	return v.Create
+}
+
+// createUserUsersUserMutationCreateUserResponse includes the requested fields of the GraphQL type UserResponse.
+type createUserUsersUserMutationCreateUserResponse struct {
+	ResponseResult createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus `json:"responseResult"`
+	User           createUserUsersUserMutationCreateUserResponseUser                         `json:"user"`
+}
+
+// GetResponseResult returns createUserUsersUserMutationCreateUserResponse.ResponseResult, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponse) GetResponseResult() createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus {
+	return v.ResponseResult
+}
+
+// GetUser returns createUserUsersUserMutationCreateUserResponse.User, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponse) GetUser() createUserUsersUserMutationCreateUserResponseUser {
+	return v.User
+}
+
+// createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus includes the requested fields of the GraphQL type ResponseStatus.
+type createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus struct {
+	ErrorCode int    `json:"errorCode"`
+	Succeeded bool   `json:"succeeded"`
+	Slug      string `json:"slug"`
+	Message   string `json:"message"`
+}
+
+// GetErrorCode returns createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus.ErrorCode, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus) GetErrorCode() int {
+	return v.ErrorCode
+}
+
+// GetSucceeded returns createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus.Succeeded, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus) GetSucceeded() bool {
+	return v.Succeeded
+}
+
+// GetSlug returns createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus.Slug, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus) GetSlug() string {
+	return v.Slug
+}
+
+// GetMessage returns createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus.Message, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponseResponseResultResponseStatus) GetMessage() string {
+	return v.Message
+}
+
+// createUserUsersUserMutationCreateUserResponseUser includes the requested fields of the GraphQL type User.
+type createUserUsersUserMutationCreateUserResponseUser struct {
+	Id    int    `json:"id"`
+	Email string `json:"email"`
+}
+
+// GetId returns createUserUsersUserMutationCreateUserResponseUser.Id, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponseUser) GetId() int { return v.Id }
+
+// GetEmail returns createUserUsersUserMutationCreateUserResponseUser.Email, and is useful for accessing the field via an interface.
+func (v *createUserUsersUserMutationCreateUserResponseUser) GetEmail() string { return v.Email }
 
 // listPagesPagesPageQuery includes the requested fields of the GraphQL type PageQuery.
 type listPagesPagesPageQuery struct {
@@ -79,9 +299,10 @@ func (v *listUsersUsersUserQuery) GetList() []listUsersUsersUserQueryListUserMin
 
 // listUsersUsersUserQueryListUserMinimal includes the requested fields of the GraphQL type UserMinimal.
 type listUsersUsersUserQueryListUserMinimal struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	ProviderKey string `json:"providerKey"`
 }
 
 // GetId returns listUsersUsersUserQueryListUserMinimal.Id, and is useful for accessing the field via an interface.
@@ -92,6 +313,9 @@ func (v *listUsersUsersUserQueryListUserMinimal) GetName() string { return v.Nam
 
 // GetEmail returns listUsersUsersUserQueryListUserMinimal.Email, and is useful for accessing the field via an interface.
 func (v *listUsersUsersUserQueryListUserMinimal) GetEmail() string { return v.Email }
+
+// GetProviderKey returns listUsersUsersUserQueryListUserMinimal.ProviderKey, and is useful for accessing the field via an interface.
+func (v *listUsersUsersUserQueryListUserMinimal) GetProviderKey() string { return v.ProviderKey }
 
 // singlePagePagesPageQuery includes the requested fields of the GraphQL type PageQuery.
 type singlePagePagesPageQuery struct {
@@ -147,11 +371,130 @@ type singlePageResponse struct {
 // GetPages returns singlePageResponse.Pages, and is useful for accessing the field via an interface.
 func (v *singlePageResponse) GetPages() singlePagePagesPageQuery { return v.Pages }
 
+// The query or mutation executed by createPage.
+const createPage_Operation = `
+mutation createPage ($content: String!, $description: String!, $editor: String!, $isPublished: Boolean!, $isPrivate: Boolean!, $locale: String!, $path: String!, $tags: [String]!, $title: String!) {
+	pages {
+		create(content: $content, description: $description, editor: $editor, isPublished: $isPublished, isPrivate: $isPrivate, locale: $locale, path: $path, tags: $tags, title: $title) {
+			responseResult {
+				succeeded
+				errorCode
+				slug
+				message
+			}
+			page {
+				id
+				path
+				title
+			}
+		}
+	}
+}
+`
+
+func createPage(
+	ctx context.Context,
+	client graphql.Client,
+	content string,
+	description string,
+	editor string,
+	isPublished bool,
+	isPrivate bool,
+	locale string,
+	path string,
+	tags []string,
+	title string,
+) (*createPageResponse, error) {
+	req := &graphql.Request{
+		OpName: "createPage",
+		Query:  createPage_Operation,
+		Variables: &__createPageInput{
+			Content:     content,
+			Description: description,
+			Editor:      editor,
+			IsPublished: isPublished,
+			IsPrivate:   isPrivate,
+			Locale:      locale,
+			Path:        path,
+			Tags:        tags,
+			Title:       title,
+		},
+	}
+	var err error
+
+	var data createPageResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by createUser.
+const createUser_Operation = `
+mutation createUser ($email: String!, $name: String!, $providerKey: String!, $groups: [Int]!, $mustChangePassword: Boolean, $sendWelcomeEmail: Boolean) {
+	users {
+		create(email: $email, name: $name, providerKey: $providerKey, groups: $groups, mustChangePassword: $mustChangePassword, sendWelcomeEmail: $sendWelcomeEmail) {
+			responseResult {
+				errorCode
+				succeeded
+				slug
+				message
+			}
+			user {
+				id
+				email
+			}
+		}
+	}
+}
+`
+
+func createUser(
+	ctx context.Context,
+	client graphql.Client,
+	email string,
+	name string,
+	providerKey string,
+	groups []int,
+	mustChangePassword bool,
+	sendWelcomeEmail bool,
+) (*createUserResponse, error) {
+	req := &graphql.Request{
+		OpName: "createUser",
+		Query:  createUser_Operation,
+		Variables: &__createUserInput{
+			Email:              email,
+			Name:               name,
+			ProviderKey:        providerKey,
+			Groups:             groups,
+			MustChangePassword: mustChangePassword,
+			SendWelcomeEmail:   sendWelcomeEmail,
+		},
+	}
+	var err error
+
+	var data createUserResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
 // The query or mutation executed by listPages.
 const listPages_Operation = `
 query listPages {
 	pages {
-		list {
+		list(orderBy: PATH) {
 			id
 			title
 			path
@@ -193,6 +536,7 @@ query listUsers {
 			id
 			name
 			email
+			providerKey
 		}
 	}
 }

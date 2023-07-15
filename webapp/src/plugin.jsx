@@ -1,5 +1,4 @@
 import { callList } from 'actions';
-import left_sidebar_header from 'components/left_sidebar_header';
 import SidebarRight from 'components/right_hand_sidebar';
 import Root from 'components/root/root';
 import reducers from 'reducers';
@@ -12,8 +11,7 @@ export default class Plugin {
         // const { toggleRHSPlugin, showRHSPlugin } = registry.registerRightHandSidebarComponent(SidebarRight, 'Todo List');
         registry.registerReducer(reducers)
         registry.registerRootComponent(Root)
-        registry.registerLeftSidebarHeaderComponent(left_sidebar_header)
-        const { toggleRHSPlugin, showRHSPlugin } = registry.registerRightHandSidebarComponent(SidebarRight, 'LIST')
+        const { toggleRHSPlugin, showRHSPlugin } = registry.registerRightHandSidebarComponent(SidebarRight, 'Navigation')
         registry.registerChannelHeaderButtonAction(
             // icon - JSX element to use as the button's icon
             <i className='icon fa fa-book' />,
@@ -24,9 +22,8 @@ export default class Plugin {
                 store.dispatch(toggleRHSPlugin);
             },
             // dropdown_text - string or JSX element shown for the dropdown button description
-            "Hello World",
+            "Wiki.js Navigation",
         );
-        store.dispatch(callList());
 
 
     }

@@ -2,10 +2,7 @@ package main
 
 import (
 	"context"
-	"encoding/json"
-	"net/http"
 	"path/filepath"
-	"strings"
 	"sync"
 
 	"github.com/Khan/genqlient/graphql"
@@ -71,43 +68,11 @@ func (p *Plugin) GetOAuth2Client() (graphql.Client, error) {
 			AccessToken: p.configuration.AccessToken,
 		},
 	)
-	client := graphql.NewClient(p.configuration.AccessURL, oauth2.NewClient(context.Background(), src))
+	client := graphql.NewClient(p.configuration.AccessURL+"/graphql", oauth2.NewClient(context.Background(), src))
 
 	return client, nil
 }
 
 // ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
-func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
-	userID := r.Header.Get("Mattermost-User-ID")
-	if userID == "" {
-		http.Error(w, "Not authorized", http.StatusUnauthorized)
-		return
-	}
-	switch r.URL.Path {
-	case "/list":
-		src := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: p.configuration.AccessToken},
-		)
-		httpClient := oauth2.NewClient(context.Background(), src)
-
-		client := graphql.NewClient(p.configuration.AccessURL, httpClient)
-
-		resp, err := listPages(context.Background(), client)
-		if err != nil {
-			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(err)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
-		return
-	default:
-		path := r.URL.Path
-		http.Redirect(w, r, strings.TrimSuffix(p.configuration.AccessURL, "graphql")+path, http.StatusSeeOther)
-		return
-	}
-
-}
 
 // See https://developers.mattermost.com/extend/plugins/server/reference/

@@ -1,6 +1,6 @@
 query listPages  {  
     pages {    
-        list {      
+        list (orderBy: PATH){      
             id
             title
             path
@@ -32,6 +32,76 @@ query listUsers {
             id
             name
             email
+            providerKey
         }
     }
+}
+
+mutation createUser (
+    $email: String!, 
+    $name: String!, 
+    $providerKey: String!, 
+    $groups: [Int]!, 
+    $mustChangePassword: Boolean, 
+    $sendWelcomeEmail: Boolean
+) {
+  users {
+    create (
+      email: $email,
+      name: $name,
+      providerKey: $providerKey,
+      groups: $groups,
+      mustChangePassword: $mustChangePassword,
+      sendWelcomeEmail: $sendWelcomeEmail,
+    ) {
+      responseResult {
+        errorCode
+        succeeded
+        slug
+        message
+      }
+      user {
+        id
+        email
+      }
+    }
+  }
+}
+
+mutation createPage (
+    $content: String!,
+    $description: String!,
+    $editor: String!,
+    $isPublished: Boolean!,
+    $isPrivate: Boolean!,
+    $locale: String!,
+    $path: String!,
+    $tags: [String]!,
+    $title: String!
+) {
+  pages {
+    create (
+        content: $content, 
+        description: $description, 
+        editor: $editor, 
+        isPublished: $isPublished, 
+        isPrivate: $isPrivate, 
+        locale: $locale, 
+        path: $path, 
+        tags: $tags, 
+        title:$title
+    ) {
+      responseResult {
+        succeeded,
+        errorCode,
+        slug,
+        message
+      },
+      page {
+        id
+        path
+      	title
+      }
+    }
+  }
 }
